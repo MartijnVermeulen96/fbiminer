@@ -14,6 +14,7 @@ The Zoo dataset is used for example purposes in the paper. Beware that repairing
 The other 6 datasets in the datasets/ folder are the ones used in the experimental section, taken from the UCI Machine Learning Repository (http://archive.ics.uci.edu/ml/). 
 
 Statistics of the datasets:
+
 Dataset | Nr. Tuples | Nr. Items | Nr. Attributes
 :--- | :--- | :--- | :---
 Adult | 48842 | 202 | 11
