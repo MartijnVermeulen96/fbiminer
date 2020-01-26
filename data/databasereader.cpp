@@ -55,19 +55,40 @@ Database DatabaseReader::fromTable(std::ifstream& infile, char delim, bool heade
 		std::getline(infile, line);
 	int size = i - 1;
 	bool eof = false;
+	int j = 0;
 	while (!eof)
 	{
+		j++;
 	    std::istringstream iss(line);
 	    std::string val;
         std::vector<int> row(size);
     	int i = 0;
+		bool readerror = false;
+
 	    while (std::getline(iss, val, delim)) {
+			if(val[0] == '"'){
+				val.erase(0, 1);
+				std::string tempval;
+				while(std::getline(iss, tempval, delim)){
+					val += "," + tempval;
+					if(tempval[tempval.length() - 1] == '"'){
+						val.erase(val.length() - 1);
+						break;
+					}
+				}
+			}
+			if(i >= size){
+				readerror = true;
+				
+				// break;
+			}
 	    	int it = db.translateToken(i, val);
 	    	db.incFreq(it);
             row[i] = it;
     		i++;
 	    }
-	    if (i > 0) {
+
+		if(!readerror && i > 0){
             db.addRow(row);
 	    }
 	    if (infile.eof()) {
